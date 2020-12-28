@@ -22,15 +22,55 @@ function ActorsPage() {
     ];
 
     const [actorsData, setActorsData] = useState(actors);
+    const [filter, setFilter] = useState("");
+    const [sortCriteria, setSortCriteria] = useState("firstName");
 
-    const actorsCont = actorsData.map( actor => <Actor actor={actor} key={actor.id}> </Actor>);
     
+    
+    function sortActorsByAge(a, b) {
+        return a.age() - b.age();
+    }
+
+    function sortActorsByFirstName(a, b) {
+        return a.firstName.localeCompare(b.firstName);
+    }
+
+    function sortActorsByLastName(a, b) {
+        return a.lastName.localeCompare(b.lastName);
+    }
+
+    function filterBy(name){
+        setFilter(name);
+    }
+
+    function sortBy(criteria){
+        setSortCriteria(criteria);
+    }
+
+    const buildActors = () => {
+        let data = actorsData.filter(function (actor) {
+            const full = (actor.fullName() + " " + actor.firstName).toLowerCase();
+            return full.includes(filter.toLowerCase());
+          });
+    
+        if (sortCriteria === "age") {
+            data.sort(sortActorsByAge);
+        } else if (sortCriteria === "lastName") {
+            data.sort(sortActorsByLastName);
+        } else if (sortCriteria === "firstName") {
+            data.sort(sortActorsByFirstName);
+        }
+    
+        const actorsCont = data.map( actor => <Actor actor={actor} key={actor.id}> </Actor>);
+        return actorsCont;
+    }
     return (
         <div className="p-actors">
-            <Container minWidth="sm">
-                <ActorForm></ActorForm>
+            <Container>
+                <h1>My Favourite Actors !!</h1>
+                <ActorForm sortCriteria={sortCriteria} filterBy={ name => filterBy(name) } sortBy={ criteria => sortBy(criteria) }></ActorForm>
                 <GridList className="grid-list" cellHeight={160} cols={3}>
-                { actorsCont }
+                { buildActors() }
                 </GridList>
             </Container>
         </div>

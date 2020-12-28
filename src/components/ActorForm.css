@@ -1,0 +1,12 @@
+.c-actors-form form {
+    color: white;
+    background-color: silver;
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.c-actors-form .form-control {
+    min-width: 120px;
+}

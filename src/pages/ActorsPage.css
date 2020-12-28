@@ -2,13 +2,6 @@
     background-color: black;
 }
 
-.p-actors form {
-    color: white;
-    background-color: silver;
-    margin: 20px;
-    padding: 20px;
-}
-
 .p-actors .grid-list {
     display: flex;
     flex-wrap: wrap;
@@ -16,4 +9,10 @@
     align-items: center;
     overflow: hidden;
     background-color: black;
+}
+
+.p-actors h1 {
+    font-family: 'Bangers', cursive;
+    color: silver;
+    font-size: 5em;
 }
