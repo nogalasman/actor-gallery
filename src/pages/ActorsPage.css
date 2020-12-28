@@ -1,0 +1,19 @@
+.p-actors {
+    background-color: black;
+}
+
+.p-actors form {
+    color: white;
+    background-color: silver;
+    margin: 20px;
+    padding: 20px;
+}
+
+.p-actors .grid-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+}
