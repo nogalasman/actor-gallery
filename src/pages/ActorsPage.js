@@ -1,8 +1,9 @@
 import Actor from '../components/Actor';
 import ActorModel from '../model/ActorModel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GridList from '@material-ui/core/GridList';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 
 import './ActorsPage.css';
@@ -21,11 +22,15 @@ function ActorsPage() {
         new ActorModel(7, "Rosanna", "Arquette", '1959-08-10', "https://m.media-amazon.com/images/M/MV5BNTI0MjYxMzQ0OF5BMl5BanBnXkFtZTcwMTk0OTE3NQ@@._V1_UX214_CR0,0,214,317_AL_.jpg", "https://www.imdb.com/name/nm0000275/?ref_=tt_cl_t13"),
     ];
 
-    const [actorsData, setActorsData] = useState(actors);
+    const [actorsData, setActorsData] = useState([]);
     const [filter, setFilter] = useState("");
     const [sortCriteria, setSortCriteria] = useState("firstName");
 
-    
+    useEffect(() => {
+        axios.get("actors.json").then(res => {
+            setActorsData(res.data.map(plainActor => new ActorModel(plainActor)));
+        });
+    },[]);
     
     function sortActorsByAge(a, b) {
         return a.age() - b.age();
