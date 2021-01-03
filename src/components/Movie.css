@@ -1,0 +1,33 @@
+.c-movie {
+    text-align: left;
+}
+
+.c-movie .special-font {
+    font-family: 'Bangers', cursive;
+}
+
+.c-movie .bold-font {
+    font-weight: bold;
+}
+
+.c-movie .card {
+    /* max-width: 345px; */
+    display: flex;
+}
+
+.c-movie .media {
+    height: 280px;
+    width: 280px;
+}
+
+.c-movie .area {
+    display: flex;
+    justify-content: left;
+}
+
+.c-movie .content {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 0;
+    padding-bottom: 0;
+}

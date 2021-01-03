@@ -11,6 +11,10 @@
     background-color: black;
 }
 
+.p-actors .grid-list-h {
+    flex-direction: column;
+}
+
 .p-actors h1 {
     font-family: 'Bangers', cursive;
     color: silver;
