@@ -1,0 +1,7 @@
+.p-movies {
+    background-color: black;
+}
+
+.p-movies .grid-list-h {
+    flex-direction: column;
+}

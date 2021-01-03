@@ -17,17 +17,19 @@ function Movie(props) {
             const id = responses[0].data.id;
             const title = responses[1].data.title;
             const runtime = responses[1].data.runtime;
-            const poster = responses[1].data.backdrop_path;
+            const poster = responses[1].data.poster_path;
             let director = "";
             let stars = [];
             responses[0].data.cast.forEach(member => {
                 if ((member.known_for_department === "Acting") && (stars.length <= 6)) {
                     stars.push(member.name);
-                } else if (member.known_for_department === "Directing") {
-                    director = member.name;
                 }
             });
        
+            const directorMember = responses[0].data.crew.find(member => member.job === "Director");
+            if (directorMember) {
+                director = directorMember.name;
+            }
             const newMovie = new MovieModel(id,title,runtime,poster,director,stars.join());
             if (!didCancel) {
                 setMovie(newMovie);

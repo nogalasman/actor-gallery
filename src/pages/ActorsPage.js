@@ -5,23 +5,17 @@ import GridList from '@material-ui/core/GridList';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
-
 import './ActorsPage.css';
 import ActorForm from '../components/ActorForm';
-import Movie from '../components/Movie';
 
-function ActorsPage() {
+function ActorsPage(props) {
 
-    const [actorsData, setActorsData] = useState([]);
-    const [moviesData, setMoviesData] = useState([]);
+    const { actors } = props;
     const [filter, setFilter] = useState("");
     const [sortCriteria, setSortCriteria] = useState("firstName");
+    
 
-    useEffect(() => {
-        axios.get("actors.json").then(res => {
-            setActorsData(res.data.map(plainActor => new ActorModel(plainActor)));
-        });
-    },[]);
+    
     
     function sortActorsByAge(a, b) {
         return a.age() - b.age();
@@ -37,16 +31,15 @@ function ActorsPage() {
 
     function filterBy(name){
         setFilter(name);
-        setMoviesData([]);
     }
 
     function sortBy(criteria){
         setSortCriteria(criteria);
-        setMoviesData([]);
     }
 
     const buildActors = () => {
-        let data = actorsData.filter(function (actor) {
+        console.log("actors recieved: "+JSON.stringify(actors));
+        let data = actors.filter(function (actor) {
             const full = (actor.fullName() + " " + actor.firstName).toLowerCase();
             return full.includes(filter.toLowerCase());
           });
@@ -59,22 +52,11 @@ function ActorsPage() {
             data.sort(sortActorsByFirstName);
         }
     
-        const actorsCont = data.map( actor => <Actor actor={actor} key={actor.id} updateMovies={name => updateMovies(name)}> </Actor>);
+        const actorsCont = data.map( actor => <Actor actor={actor} key={actor.id} > </Actor>);
         return actorsCont;
     }
 
-    function updateMovies(name){
-        axios.get("https://api.themoviedb.org/3/search/person?api_key=7c32e96d2b6cf3b9af35ea5273762c93&language=en-US&query="+name.replace(" ","%20")).then(res => {
-            setMoviesData(res.data.results[0].known_for.map(result => result.id));
-        });
-    }
-
-    const buildMovies = () => {
     
-        const moviesCont = moviesData.map( movieId => <Movie movieId={movieId} key={movieId}> </Movie>);
-        return moviesCont;
-    }
-
     return (
         <div className="p-actors">
             <Container>
@@ -83,9 +65,7 @@ function ActorsPage() {
                 <GridList className="grid-list" cellHeight={160} cols={3}>
                 { buildActors() }
                 </GridList>
-                <GridList className="grid-list-h" cellHeight={160} cols={1}>
-                { buildMovies() }
-                </GridList>
+                
             </Container>
         </div>
     )
